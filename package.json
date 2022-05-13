@@ -1,5 +1,6 @@
 {
-  "name": "hardhat-project",
+  "name": "help-ukrain",
+  "author": "Oleg Bedrin <simplavero@gmail.com>"
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
