@@ -6,6 +6,7 @@ require("hardhat-gas-reporter");
 require("solidity-coverage");
 
 const fs = require("fs");
+const { OpenSeaPort, Network } = require("opensea-js");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -35,6 +36,27 @@ task("extract_poetry", "Extracts poetry from the txt file.", async (taskArgs, hr
   ));
   console.log("Poetry extracted.");
 });
+
+task("start_sells", "Places the sell orders for each of minted tokens.")
+  .addParam("token", "The token address")
+  .setAction(async (taskArgs, hre) => {
+    const expirationTime = Math.round(Date.now() / 1000 + 60 * 60 * 24);
+    const accounts = await hre.ethers.getSigners();
+
+    const helpUkrainInstance = await hre.ethers.getContractAt('HelpUkrain', taskArgs.token);
+    console.log(helpUkrainInstance);
+    const totalSupply = await helpUkrainInstance.totalSupply();
+    // const listing = await seaport.createSellOrder({
+    //   asset: {
+    //     tokenId,
+    //     tokenAddress,
+    //   },
+    //   accounts[0].address,
+    //   startAmount: 0.5,
+    //   expirationTime
+    // })
+  });
+
 
 const rinkebyInfuraURL = `https://rinkeby.infura.io/v3/${process.env.INFURA_RINKEBY}`;
 const rinkebyAlchemyURL = `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_RINKEBY}`;
